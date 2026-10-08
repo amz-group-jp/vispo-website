@@ -2,6 +2,7 @@
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
+fs.mkdirSync('reports/forms', {recursive:true});
 const base=process.env.VISPO_BASE||'http://localhost:8774/';
 (async()=>{
  const browser=await chromium.launch();let checks=0;
@@ -39,7 +40,7 @@ const base=process.env.VISPO_BASE||'http://localhost:8774/';
   assert.equal(posts.length,0,'review did not send');
   await page.locator('[data-edit]').click();assert.equal(await page.locator(`[name="field_${c.email}"]`).inputValue(),'test@example.invalid');
   await page.locator('[data-review]').click();
-  if(width===390)await page.screenshot({path:`../../site-replica-review/vispo-reception/${c.file}-confirm.png`,fullPage:true});
+  if(width===390)await page.screenshot({path:`reports/forms/${c.file}-confirm.png`,fullPage:true});
   await Promise.all([page.waitForURL('https://ssl.form-mailer.jp/fm/service/Forms/complete'),page.locator('[data-send]').click()]);
   assert.equal(posts.length,1);assert.equal(posts[0].url,'https://ssl.form-mailer.jp/fm/service/Forms/complete');
   assert.match(posts[0].data,new RegExp('name="key"\\r\\n\\r\\n'+c.key));

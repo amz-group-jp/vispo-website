@@ -1,0 +1,42 @@
+name: Verify website
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify Python syntax
+        run: python -m py_compile scripts/build.py scripts/verify.py
+      - name: Deployment safety regressions
+        run: python scripts/test_build.py
+      - name: Build and verify preview
+        run: |
+          python scripts/build.py
+          python scripts/verify.py
+      - name: Build and verify production configuration without deploying
+        run: |
+          python scripts/build.py --mode production
+          python scripts/verify.py --mode production
+      - name: Install browser test tools
+        run: |
+          npm install --no-save --package-lock=false playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - name: Test forms without external submissions
+        run: |
+          python scripts/build.py
+          python -m http.server 8774 --bind 127.0.0.1 --directory dist > /tmp/vispo-test-server.log 2>&1 &
+          vispo_server_pid=$!
+          trap 'kill "$vispo_server_pid"' EXIT
+          python -c "import urllib.request,time; time.sleep(1); urllib.request.urlopen('http://127.0.0.1:8774/')"
+          VISPO_BASE=http://127.0.0.1:8774/ node tests/forms.cjs
