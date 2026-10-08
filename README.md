@@ -69,4 +69,6 @@ python3 scripts/build.py
 
 ブラウザ表示検証はPlaywright環境で `VISPO_BASE=http://localhost:8775/ node tests/site.cjs`。distを静的サーバーで配信して実行してください。
 
-旧サイトの画像・PDFをassetsへ同梱しました。旧HTMLのsample-pageはWordPressの例文のため移行対象外とし404にします。原寸リンク2点は元保存に存在しませんが、本文中の縮小画像は保存済みです。
+旧サイトの画像・PDFをassetsへ同梱しました。旧HTMLのsample-pageはWordPressの例文のため移行対象外とし404にします。元保存に欠けていた原寸画像2点も旧サイトから回収し、すべて新サイト側へ同梱しました。
+
+公開HTTP検証（送信なし）: `node tests/release.cjs`。702件の旧URL301、404、非公開ファイルの非配信、canonical/noindexを確認します。通常CIでは実行せず、公開後に実施します。

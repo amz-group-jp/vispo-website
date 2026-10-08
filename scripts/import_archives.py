@@ -24,6 +24,8 @@ def media(url,article):
  u=urlparse(urljoin('https://vispo-fit.com/',url));path=unquote(u.path).lstrip('/')
  if u.hostname not in ('vispo-fit.com','www.vispo-fit.com'):
   REPORT['missing_media'].append({'article':article,'source':url,'reason':'external media not copied'});return None
+ recovered={'wp-content/uploads/2023/09/画像1.png':'assets/archive-original-ordermade.png','wp-content/uploads/2024/01/3.jpg':'assets/archive-original-vispo-pilates.jpg'}
+ if path in recovered and (ROOT/recovered[path]).is_file():return recovered[path]
  p=SOURCE/path
  if not p.is_file():
   REPORT['missing_media'].append({'article':article,'source':path,'reason':'not present in saved copy'});return None
@@ -33,7 +35,7 @@ def media(url,article):
  name='archive-'+hashlib.sha256(p.read_bytes()).hexdigest()[:20]+ext
  if not (ASSETS/name).exists():shutil.copyfile(p,ASSETS/name)
  return 'assets/'+name
-page_map={'':'index','policy':'privacy','contact':'inquiry','diet_form':'inquiry','vispo24':'gym'}
+page_map={'':'index','policy':'privacy','contact':'inquiry','diet_form':'inquiry','vispo24':'facility'}
 def link(url,article):
  u=urlparse(urljoin('https://vispo-fit.com/',url));path=unquote(u.path).strip('/')
  if u.scheme=='tel':return url

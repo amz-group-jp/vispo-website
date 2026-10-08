@@ -1091,18 +1091,7 @@
       "copies": 1
     }
   ],
-  "missing_media": [
-    {
-      "article": "ordermade",
-      "source": "wp-content/uploads/2023/09/画像1.png",
-      "reason": "not present in saved copy"
-    },
-    {
-      "article": "vispo-pilates",
-      "source": "wp-content/uploads/2024/01/3.jpg",
-      "reason": "not present in saved copy"
-    }
-  ],
+  "missing_media": [],
   "unmapped_links": [],
   "skipped": [],
   "category_redirects": [
@@ -1215,11 +1204,43 @@
   "summary": {
     "numeric_articles": 133,
     "legacy_pages": 3,
-    "copied_assets": 64,
-    "missing_media": 2,
+    "copied_assets": 66,
+    "missing_media": 0,
     "unmapped_links": 0,
     "redirects_added": 0,
     "skipped": 0,
     "redirect_mappings": 628
-  }
+  },
+  "live_missing_media_check": [
+    {
+      "article": "ordermade",
+      "source": "wp-content/uploads/2023/09/画像1.png",
+      "reason": "not present in saved copy",
+      "recovered_asset": "assets/archive-original-ordermade.png",
+      "bytes": 1252054
+    },
+    {
+      "article": "vispo-pilates",
+      "source": "wp-content/uploads/2024/01/3.jpg",
+      "reason": "not present in saved copy",
+      "recovered_asset": "assets/archive-original-vispo-pilates.jpg",
+      "bytes": 1329560
+    }
+  ],
+  "recovered_media": [
+    {
+      "article": "ordermade",
+      "source": "wp-content/uploads/2023/09/画像1.png",
+      "reason": "not present in saved copy",
+      "recovered_asset": "assets/archive-original-ordermade.png",
+      "bytes": 1252054
+    },
+    {
+      "article": "vispo-pilates",
+      "source": "wp-content/uploads/2024/01/3.jpg",
+      "reason": "not present in saved copy",
+      "recovered_asset": "assets/archive-original-vispo-pilates.jpg",
+      "bytes": 1329560
+    }
+  ]
 }
